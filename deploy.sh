@@ -1,7 +1,5 @@
-
 #!/data/data/com.termux/files/usr/bin/bash
 # deploy_weblyla.sh - push to GitHub, deploy to Vercel, and open page
-
 set -e
 
 REPO_DIR=~/gitlyla
@@ -12,7 +10,7 @@ echo "==> In repo folder: $REPO_DIR"
 
 # --- Step 1: Use PAT from environment variable ---
 if [[ -n "$GITHUB_PAT" ]]; then
-    git remote set-url origin https://babikerosman468:$GITHUB_PAT@github.com/babikerosman468/weblyla-.git
+    git remote set-url origin "https://babikerosman468:$GITHUB_PAT@github.com/babikerosman468/weblyla-.git"
     echo "==> Using PAT from environment variable"
 fi
 
