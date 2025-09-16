@@ -1,0 +1,7 @@
+export GITHUB_PAT=$(echo "$GITHUB_PAT" | tr -d '[:space:]')
+
+echo "export GITHUB_PAT='$GITHUB_PAT'" >> ~/.bashrc
+
+echo "✅ PAT is now: ${GITHUB_PAT:0:8}... (40 characters)"
+```
+
