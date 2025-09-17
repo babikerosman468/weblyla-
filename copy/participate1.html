@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,31 +38,8 @@
     <p>&copy; 2025 Lula Support</p>
   </footer>
 
-  <script>
-    const form = document.getElementById('participateForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const data = {
-        name: form.name.value,
-        email: form.email.value,
-        skills: form.skills.value
-      };
-
-      const res = await fetch('/api/participate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      const result = await res.json();
-      if (result.success) {
-        alert('Participation submitted! Thank you.');
-        form.reset();
-      } else {
-        alert('Something went wrong. Please try again.');
-      }
-    });
-  </script>
+  <!-- ✅ Link your external JS here -->
+  <script src="participate.js"></script>
 </body>
 </html>
 

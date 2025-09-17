@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Participate - Lula Support</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reuse the same styles from index.html */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .logo h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo-icon {
+      font-size: 2.5rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover, nav a.active {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      flex: 1;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem;
+      margin-bottom: 2rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .hero h2 {
+      font-size: 2.8rem;
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .participate-content {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .participate-content h2 {
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .ways-to-participate {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .participation-option {
+      background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+      padding: 1.5rem;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 5px极速赛车开奖直播
+      <div class="participation-option">
+        <i class="fas fa-comments"></i>
+        <h3>Community Support</h3>
+        <p>Help answer questions and provide support to other community members.</p>
+      </div>
+      
+      <div class="participation-option">
+        <i class="fas fa-hands-helping"></i>
+        <h3>Donate</h3>
+        <p>Support our mission financially to help us continue providing free resources.</p>
+      </div>
+    </div>
+    
+    <h2>Join Our Community</h2>
+    <form id="participation-form" action="/api/participate" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <select name="participation_type" required>
+        <option value="" disabled selected>How would you like to participate?</option>
+        <option value="code">Contribute Code</option>
+        <option value="documentation">Write Documentation</option>
+        <option value="support">Community Support</option>
+        <option value="donate">Donate</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea name="message" placeholder="Tell us about yourself and how you'd like to contribute" rows="4"></textarea>
+      <button type="submit">Get Involved</button>
+    </form>
+    
+    <div id="form-message" style="display: none; margin-top: 1rem; padding: 1rem; border-radius: 8px; text-align: center;"></div>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 Lula Support. All rights reserved.</p>
+</footer>
+
+<script>
+  // Form submission handling
+  document.addEventListener('DOMContentLoaded', function() {
+    const participationForm = document.getElementById('participation-form');
+    const formMessage = document.getElementById('form-message');
+    
+    if (participationForm) {
+      participationForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+        
+        try {
+          submitButton.textContent = 'Submitting...';
+          submitButton.disabled = true;
+          
+          const response = await fetch(this.action, {
+            method: 'POST',
+            body: formData
+          });
+          
+          const result = await response.json();
+          
+          if (response.ok) {
+            formMessage.style.display = 'block';
+            formMessage.style.backgroundColor = '#d4edda';
+            formMessage.style.color = '#155724';
+            formMessage.textContent = result.message || 'Thank you for your interest! We will contact you soon.';
+            this.reset();
+          } else {
+            throw new Error(result.message || 'Submission failed');
+          }
+        } catch (error) {
+          formMessage.style.display = 'block';
+          formMessage.style.backgroundColor = '#f8d7da';
+          formMessage.style.color = '#721c24';
+          formMessage.textContent = error.message || 'There was an error submitting your form. Please try again.';
+        } finally {
+          submitButton.textContent = originalButtonText;
+          submitButton.disabled = false;
+          
+          // Hide message after 5 seconds
+          setTimeout(() => {
+            formMessage.style.display = 'none';
+          }, 5000);
+        }
+      });
+    }
+  });
+</script>
+

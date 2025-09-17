@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: lula_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: your_password_here
+      MYSQL_DATABASE: lula
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./lula_schema.sql:/docker-entrypoint-initdb.d/lula_schema.sql

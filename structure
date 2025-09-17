@@ -1,0 +1,126 @@
+
+✅ Final server6.js
+
+require('dotenv').config();
+const express = require('express');
+const mysql = require('mysql2');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3010;
+
+// --- DB connection ---
+const db = mysql.createConnection({
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER || 'babsuser',
+  password: process.env.DB_PASS || 'babsroot',
+  database: process.env.DB_NAME || 'babsdb',
+  socketPath: process.env.DB_SOCKET || undefined,
+});
+
+db.connect(err => {
+  if (err) {
+    console.error('❌ DB connection failed:', err.message);
+    process.exit(1);
+  }
+  console.log('✅ Connected to MariaDB!');
+});
+
+// --- Serve static folders ---
+app.use('/hub', express.static(path.join(__dirname, 'myglobalhearthub')));
+app.use('/babsapp', express.static(path.join(__dirname, 'babsapp')));
+
+// --- Redirect root to hub ---
+app.get('/', (req, res) => {
+  res.redirect('/hub');
+});
+
+// --- Example DB ping ---
+app.get('/pingdb', (req, res) => {
+  db.query('SELECT NOW() AS now', (err, results) => {
+    if (err) {
+      console.error('❌ DB query failed:', err.message);
+      return res.status(500).json({ error: err.message });
+    }
+    res.json({ server_time: results[0].now });
+  });
+});
+
+// --- Start server ---
+const server = app.listen(PORT, async () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`📌 Main site:   http://localhost:${PORT}/hub`);
+  console.log(`📌 BabsApp:     http://localhost:${PORT}/babsapp`);
+});
+
+// --- Graceful shutdown ---
+const shutdown = () => {
+  console.log('\n⏳ Shutting down...');
+  server.close(() => {
+    console.log('✅ HTTP server closed.');
+    db.end(err => {
+      if (err) console.error('⚠️ Error closing DB:', err.message);
+      else console.log('✅ DB connection closed.');
+      process.exit(0);
+    });
+  });
+};
+
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
+
+
+---
+
+✅ Folder structure
+
+~/mariadb/
+├── server6.js
+├── .env
+├── myglobalhearthub/
+│   ├── index.html  (this is your copyall.html renamed)
+│   └── [images, css, assets...]
+├── babsapp/
+│   ├── all.html
+│   ├── compiletex1.sh
+│   ├── editor.html
+│   ├── note.tex
+│   ├── note.pdf
+│   └── [other assets...]
+
+
+---
+
+✅ What you get
+
+http://localhost:3010/ → redirects to /hub
+
+http://localhost:3010/hub → opens copyall.html (as index.html)
+
+http://localhost:3010/babsapp → opens all.html and all LaTeX files
+
+Database stays connected and ready for dynamic work later
+
+
+
+---
+
+✅ Next step
+
+1️⃣ Rename copyall.html → index.html in myglobalhearthub/
+2️⃣ Place all.html & compiletex1.sh in babsapp/
+3️⃣ Save this server6.js to ~/mariadb/
+
+Then run:
+
+node server6.js
+
+
+---
+
+📦 If you want, I can zip this exact folder tree for you right now. Say: ➜ ZIP IT
+
+✨ Let’s finish this cleanly!
+
+

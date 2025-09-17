@@ -1,0 +1,7 @@
+
+mysql -u root -p < lula_setup.sql
+
+
+
+mysql -u root -p lula < ~/mariadb/lula/lula_setup.sql
+

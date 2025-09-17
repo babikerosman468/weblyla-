@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lula Support - Empowering Communities</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    header {
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .logo h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .logo-icon {
+      font-size: 2.5rem;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+    
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      flex: 1;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem;
+      margin-bottom: 2rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    .hero h2 {
+      font-size: 2.8rem;
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #555;
+    }
+    
+    .apps-section {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    
+    .apps-section h3 {
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .apps-section h3:after {
+      content: '';
+      position: absolute;
+      width: 60%;
+      height: 4px;
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      bottom: -10px;
+      left: 20%;
+      border-radius: 2px;
+    }
+    
+    .app-cards {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    
+    .app-card {
+      background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+      padding: 2rem;
+      border-radius: 16px;
+      width: 280px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .app-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .app-card a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #2c3e50;
+    }
+    
+    .app-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .app-card h4 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .app-card p {
+      color: #666;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+    
+    .app-card .btn {
+      margin-top: 1.2rem;
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .app-card:hover .btn {
+      background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+      transform: scale(1.05);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #2c3e50;
+      color: white;
+      margin-top: 3rem;
+    }
+    
+    footer p {
+      font-size: 1.1rem;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+      
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .hero h2 {
+        font-size: 2.2rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .app-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .app-card {
+        width: 100%;
+        max-width: 350px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-icon">💫</div>
+      <h1>Lula Support</h1>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="participate.html">Participate</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Empowering Communities</h2>
+      <p>Lula helps communities connect and thrive through open-source collaboration.</p>
+    </section>
+
+    <section class="apps-section">
+      <h3>Explore Our Platforms</h3>
+      <div class="app-cards">
+        <div class="app-card">
+          <a href="http://localhost:3010" target="_blank">
+            <div class="app-icon">🌍</div>
+            <h4>Heart Hub</h4>
+            <p>Connect with community resources and support networks</p>
+            <span class="btn">Visit Heart Hub</span>
+          </a>
+        </div>
+        
+        <div class="app-card">
+          <a href="http://localhost:3030" target="_blank">
+            <div class="app-icon">✨</div>
+            <h4>BabsApp</h4>
+            <p>Tools and applications for community engagement</p>
+            <span class="btn">Explore BabsApp</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Lula Support. All rights reserved.</p>
+  </footer>
+</body>
+</html>

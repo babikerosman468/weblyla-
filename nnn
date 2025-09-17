@@ -1,0 +1,47 @@
+✅ 📂 Required folders
+
+~/mariadb/lula/ → contains index.html, copyall.html, sql/ etc.
+
+~/mariadb/babsapp/ → contains editor.html, all.html, note.tex, note.pdf, etc.
+
+
+
+---
+
+✅ How it works
+
+
+---
+
+✨ Students can visit one domain → get both!
+
+🌟 Lula’s team → / and /hub
+📚 BabsApp LaTeX → /babsapp and /babsapp/all
+
+
+---
+
+✅ Next
+
+1️⃣ Save this as your new server6.js.
+2️⃣ Make sure folder layout matches:
+
+~/mariadb/
+  ├── lula/
+  ├── babsapp/
+
+3️⃣ Run:
+
+node server6.js
+
+4️⃣ 🎉 Open:
+
+http://localhost:3010/
+
+http://localhost:3010/hub
+
+http://localhost:3010/babsapp
+
+http://localhost:3010/babsapp/all
+
+

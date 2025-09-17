@@ -1,0 +1,111 @@
+
+mariadb -u root -p --socket=/data/data/com.termux/files/usr/var/run/mysqld.sock
+
+→ Does that work when you enter the password manually? If not, fix your password first.
+
+
+
+---
+
+2️⃣ Fix your script so it stops on error
+
+Your deploy_lula.sh should fail if mariadb fails.
+
+✅ Add set -e at the top:
+
+#!/bin/bash
+set -e  # stop on any error
+
+echo "🚀 Starting Lula DB deployment..."
+
+SOCKET="/data/data/com.termux/files/usr/var/run/mysqld.sock"
+PASSWORD="YOURPASSWORD"
+
+MYSQL_PWD=$PASSWORD mariadb -u root --socket=$SOCKET lula <<EOF
+
+DROP PROCEDURE IF EXISTS get_tasks_by_user;
+
+DELIMITER //
+
+CREATE PROCEDURE get_tasks_by_user(IN user_id INT)
+BEGIN
+    SELECT
+        t.id,
+        t.title,
+        t.status,
+        t.priority,
+        t.due_date,
+        p.name AS project_name
+    FROM tasks t
+    JOIN projects p ON t.project_id = p.id
+    WHERE t.assigned_to = user_id;
+END;
+//
+
+DELIMITER ;
+
+EOF
+
+echo "✅ Lula DB deployed successfully!"
+
+Why?
+
+If mariadb fails, the script stops — so you won’t see ✅ if it failed.
+
+
+
+---
+
+3️⃣ If password is correct but still fails:
+
+Try using --protocol=TCP:
+
+MYSQL_PWD=$PASSWORD mariadb -u root --protocol=TCP --socket=$SOCKET lula <<EOF
+...
+EOF
+
+Sometimes MariaDB refuses local socket connections for root but allows TCP.
+
+
+---
+
+4️⃣ Check your root permissions
+
+In MariaDB, root may only connect via unix_socket.
+Check this by running:
+
+SELECT User, Host, plugin FROM mysql.user;
+
+If root uses unix_socket plugin, password won’t work.
+You’d need to connect without password:
+
+mariadb -u root --socket=/data/data/com.termux/files/usr/var/run/mysqld.sock
+
+Or change the plugin:
+
+ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('YOURPASSWORD');
+FLUSH PRIVILEGES;
+
+
+---
+
+🟢 Summary:
+
+✅ 1. Test your password by logging in manually.
+✅ 2. Use set -e to stop the script on errors.
+✅ 3. Use MYSQL_PWD or .my.cnf — not -p.
+✅ 4. If root uses unix_socket auth, fix the plugin or use no password.
+
+
+---
+
+If you want, paste:
+
+mariadb -u root -p --socket=/data/data/com.termux/files/usr/var/run/mysqld.sock
+
+and tell me if manual login works.
+I’ll help you adjust immediately!
+
+Shall we test this step by step? 🔍✨
+
+

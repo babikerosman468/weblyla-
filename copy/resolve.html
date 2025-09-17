@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Push Protection Resolution</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            color: #c9d1d9;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #58a6ff;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            color: #58a6ff;
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: #f78166;
+            margin: 20px 0 10px;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: #161b22;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #30363d;
+        }
+        
+        .urgent {
+            background: linear-gradient(135deg, #da3633 0%, #8e1513 100%);
+            color: white;
+            grid-column: 1 / -1;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(218, 54, 51, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(218, 54, 51, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(218, 54, 51, 0); }
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background: #238636;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .code {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+        
+        code {
+            background: #0d1117;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #30363d;
+        }
+        
+        .danger {
+            color: #f85149;
+            font-weight: bold;
+        }
+        
+        .success {
+            color: #3fb950;
+            font-weight: bold;
+        }
+        
+        .warning {
+            color: #d29922;
+            font-weight: bold;
+        }
+        
+        .info {
+            color: #58a6ff;
+            font-weight: bold;
+        }
+        
+        .button {
+            display: inline-block;
+            background: #238636;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .button:hover {
+            background: #2ea043;
+        }
+        
+        .button-secondary {
+            background: #30363d;
+        }
+        
+        .button-secondary:hover {
+            background: #484f58;
+        }
+        
+        .terminal {
+            background: #0d1117;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Fira Code', monospace;
+            position: relative;
+            border: 1px solid #30363d;
+        }
+        
+        .terminal-header {
+            background: #21262d;
+            margin: -20px -20px 20px;
+            padding: 10px 20px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .terminal-content {
+            overflow-x: auto;
+        }
+        
+        .terminal .command::before {
+            content: "$ ";
+            color: #58a6ff;
+        }
+        
+        .terminal .output {
+            color: #8b949e;
+            margin: 5px 0 15px;
+        }
+        
+        .terminal .error {
+            color: #f85149;
+        }
+        
+        .terminal .success {
+            color: #3fb950;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #30363d;
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>GitHub Push Protection Resolution</h1>
+        <p>Your deployment was blocked because GitHub detected secrets in your commits</p>
+    </header>
+    
+    <div class="container">
+        <div class="card urgent">
+            <h2>Immediate Action Required</h2>
+            <p>GitHub has detected sensitive data in your repository:</p>
+            <ul>
+                <li>GitHub Personal Access Token found in:
+                    <ul>
+                        <li>Commit: a3d13d443d988ae5aae5c50c6ad07a9f631a2720</li>
+                        <li>File: .env (line 8)</li>
+                        <li>File: pat1 (line 1)</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>You must resolve this before you can push to GitHub again.</p>
+        </div>
+        
+        <div class="card">
+            <h2>Step 1: Remove the Exposed Secrets</h2>
+            <p>First, you need to remove the exposed secrets from your git history.</p>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                    <h3>Revoke the exposed tokens</h3>
+                    <p>Immediately revoke any exposed tokens in your GitHub settings:</p>
+                    <a href="https://github.com/settings/tokens" target="_blank" class="button">Revoke Tokens</a>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                    <h3>Remove sensitive files from history</h3>
+                    <p>Use the BFG Repo-Cleaner or git filter-repo to remove secrets:</p>
+                    <div class="code">
+# Using git filter-repo (recommended)
+git filter-repo --force --invert-paths --path pat1 --path .env
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                    <h3>Force push the cleaned history</h3>
+                    <p>After cleaning, force push to overwrite the remote history:</p>
+                    <div class="code">
+git push origin --force --all
+                    </div>
+                    <p class="warning">Warning: This will rewrite history and may affect collaborators.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Step 2: Prevent Future Leaks</h2>
+            <p>Implement measures to prevent accidentally committing secrets again.</p>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                    <h3>Add sensitive files to .gitignore</h3>
+                    <p>Create or update your .gitignore file:</p>
+                    <div class="code">
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Secret files
+secrets/
+*.secret
+pat*
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                    <h3>Use environment variables</h3>
+                    <p>Store secrets as environment variables instead of in code:</p>
+                    <div class="code">
+# Example of using environment variables
+import os
+
+token = os.environ.get('GITHUB_TOKEN')
+if not token:
+    raise ValueError("No GITHUB_TOKEN environment variable set")
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                    <h3>Use pre-commit hooks</h3>
+                    <p>Install pre-commit hooks to detect secrets before committing:</p>
+                    <div class="code">
+# Install detect-secrets
+pip install detect-secrets
+
+# Set up pre-commit hook
+detect-secrets init > .pre-commit-config.yaml
+pre-commit install
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Step 3: Update Your Deployment Script</h2>
+            <p>Modify your deploy.sh to handle secrets more securely.</p>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span>deploy.sh</span>
+                    <span>▼</span>
+                </div>
+                <div class="terminal-content">
+                    <div class="command">git add .</div>
+                    <div class="output"># But first check for secrets</div>
+                    <br>
+                    <div class="command"># Add secret scanning before commit</div>
+                    <div class="command">if [ -f ".env" ]; then</div>
+                    <div class="command" style="margin-left: 20px;">echo "Warning: .env file detected. Make sure it doesn't contain secrets."</div>
+                    <div class="command" style="margin-left: 20px;"># Optionally, check for common secret patterns</div>
+                    <div class="command" style="margin-left: 20px;">if grep -q "token\\|key\\|secret\\|password" .env; then</div>
+                    <div class="command" style="margin-left: 40px;">echo "ERROR: Potential secrets found in .env file. Aborting commit."</div>
+                    <div class="command" style="margin-left: 40px;">exit 1</div>
+                    <div class="command" style="margin-left: 20px;">fi</div>
+                    <div class="command">fi</div>
+                    <br>
+                    <div class="command"># Only proceed if no secrets detected</div>
+                    <div class="command">git commit -m "Update: $(date +'%Y-%m-%d %H:%M')"</div>
+                    <div class="command">git push origin main</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Alternative: Use GitHub Secrets</h2>
+            <p>For CI/CD pipelines, use GitHub Secrets to securely store sensitive data.</p>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                    <h3>Store secrets in GitHub</h3>
+                    <p>Add your secrets in GitHub repository settings → Secrets and variables → Actions</p>
+                    <a href="https://docs.github.com/en/actions/security-guides/encrypted-secrets" target="_blank" class="button button-secondary">GitHub Secrets Documentation</a>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                    <h3>Use secrets in workflows</h3>
+                    <p>Reference secrets in your GitHub workflows:</p>
+                    <div class="code">
+# In your workflow file
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production
+        run: |
+          ./deploy.sh --token ${{ secrets.GITHUB_TOKEN }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                    <h3>For Vercel deployments</h3>
+                    <p>Add environment variables in Vercel dashboard:</p>
+                    <a href="https://vercel.com/docs/projects/environment-variables" target="_blank" class="button button-secondary">Vercel Environment Variables</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="terminal">
+        <div class="terminal-header">
+            <span>Terminal - Verification Steps</span>
+            <span>▼</span>
+        </div>
+        <div class="terminal-content">
+            <div class="command">git log --oneline -n 5</div>
+            <div class="output">f5f13bf (HEAD -> main) Update: 2025-09-17 02:57<br>a3d13d4 Previous commit with secrets<br>...</div>
+            <br>
+            <div class="command"># Check if secrets are still present</div>
+            <div class="command">git grep -n "token\\|key\\|secret\\|password" $(git rev-list --all)</div>
+            <div class="output error"># This should return no results after cleaning</div>
+            <br>
+            <div class="command"># Verify .gitignore includes sensitive files</div>
+            <div class="command">cat .gitignore | grep -E "(env|secret|token|key)"</div>
+            <div class="output success">.env<br>*.secret<br>pat*</div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>GitHub Push Protection Resolution Guide | Remember to always keep your secrets secure</p>
+        <p>For more information, visit <a href="https://docs.github.com/en/code-security/secret-scanning" target="_blank" style="color: #58a6ff;">GitHub Secret Scanning Documentation</a></p>
+    </footer>
+
+    <script>
+        // Simple interactive elements
+        document.querySelectorAll('.button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!this.getAttribute('href')) {
+                    e.preventDefault();
+                    alert('This is a demonstration button. In a real application, this would perform the action.');
+                }
+            });
+        });
+        
+        // Terminal animation
+        const terminalContents = document.querySelectorAll('.terminal-content');
+        terminalContents.forEach(terminal => {
+            const lines = terminal.innerHTML.split('<br>');
+            terminal.innerHTML = '';
+            
+            let index = 0;
+            function typeLine() {
+                if (index < lines.length) {
+                    terminal.innerHTML += lines[index] + '<br>';
+                    terminal.scrollTop = terminal.scrollHeight;
+                    index++;
+                    setTimeout(typeLine, 300);
+                }
+            }
+            
+            setTimeout(typeLine, 1000);
+        });
+    </script>
+</body>
+</html>
+
