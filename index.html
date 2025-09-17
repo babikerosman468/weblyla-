@@ -15,7 +15,7 @@
       box-sizing: border-box;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    
+
     body {
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       color: #333;
@@ -24,7 +24,7 @@
       display: flex;
       flex-direction: column;
     }
-    
+
     header {
       background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
       color: white;
@@ -35,35 +35,35 @@
       align-items: center;
       flex-wrap: wrap;
     }
-    
+
     .logo {
       display: flex;
       align-items: center;
       gap: 0.8rem;
     }
-    
+
     .logo h1 {
       font-size: 2.2rem;
       font-weight: 700;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
-    
+
     .logo-icon {
       font-size: 2.5rem;
       animation: pulse 2s infinite;
     }
-    
+
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
-    
+
     nav {
       display: flex;
       gap: 1.5rem;
     }
-    
+
     nav a {
       color: white;
       text-decoration: none;
@@ -73,19 +73,19 @@
       border-radius: 30px;
       transition: all 0.3s ease;
     }
-    
-    nav a:hover {
+
+    nav a:hover, nav a.active {
       background: rgba(255, 255, 255, 0.2);
       transform: translateY(-2px);
     }
-    
+
     main {
       max-width: 1200px;
       margin: 2rem auto;
       padding: 0 2rem;
       flex: 1;
     }
-    
+
     .hero {
       text-align: center;
       padding: 3rem 1rem;
@@ -94,7 +94,7 @@
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     }
-    
+
     .hero h2 {
       font-size: 2.8rem;
       color: #2c3e50;
@@ -104,22 +104,23 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    
+
     .hero p {
       font-size: 1.3rem;
       max-width: 800px;
       margin: 0 auto;
       color: #555;
     }
-    
+
     .apps-section {
       background: white;
       padding: 2.5rem;
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       text-align: center;
+      margin-bottom: 2rem;
     }
-    
+
     .apps-section h3 {
       font-size: 1.8rem;
       color: #2c3e50;
@@ -127,7 +128,7 @@
       position: relative;
       display: inline-block;
     }
-    
+
     .apps-section h3:after {
       content: '';
       position: absolute;
@@ -138,7 +139,7 @@
       left: 20%;
       border-radius: 2px;
     }
-    
+
     .app-cards {
       display: flex;
       justify-content: center;
@@ -146,7 +147,7 @@
       flex-wrap: wrap;
       margin-top: 1.5rem;
     }
-    
+
     .app-card {
       background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
       padding: 2rem;
@@ -156,12 +157,12 @@
       transition: all 0.3s ease;
       border: 1px solid rgba(0, 0, 0, 0.05);
     }
-    
+
     .app-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
     }
-    
+
     .app-card a {
       display: flex;
       flex-direction: column;
@@ -169,23 +170,23 @@
       text-decoration: none;
       color: #2c3e50;
     }
-    
+
     .app-icon {
       font-size: 3rem;
       margin-bottom: 1rem;
     }
-    
+
     .app-card h4 {
       font-size: 1.4rem;
       margin-bottom: 0.5rem;
     }
-    
+
     .app-card p {
       color: #666;
       text-align: center;
       margin-top: 0.5rem;
     }
-    
+
     .app-card .btn {
       margin-top: 1.2rem;
       padding: 0.8rem 1.5rem;
@@ -194,13 +195,128 @@
       border-radius: 30px;
       font-weight: 600;
       transition: all 0.3s ease;
+      display: inline-block;
     }
-    
+
     .app-card:hover .btn {
       background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
       transform: scale(1.05);
     }
-    
+
+    /* About Page Styles */
+    .about-content {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .about-content h2 {
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .about-content p {
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+
+    .team-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .team-member {
+      background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+      padding: 1.5rem;
+      border-radius: 16px;
+      width: 250px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .team-member img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 4px solid #6a11cb;
+    }
+
+    /* Participate Page Styles */
+    .participate-content {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .participate-content h2 {
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .ways-to-participate {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .participation-option {
+      background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+      padding: 1.5rem;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .participation-option i {
+      font-size: 3rem;
+      color: #6a11cb;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 600px;
+      margin: 2rem auto 0;
+    }
+
+    form input, form textarea {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    form button {
+      padding: 1rem;
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    form button:hover {
+      background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+      transform: translateY(-2px);
+    }
+
     footer {
       text-align: center;
       padding: 2rem;
@@ -208,11 +324,11 @@
       color: white;
       margin-top: 3rem;
     }
-    
+
     footer p {
       font-size: 1.1rem;
     }
-    
+
     /* Chrome promotion banner */
     .chrome-promotion {
       background: linear-gradient(90deg, #4285F4, #34A853, #FBBC05, #EA4335);
@@ -221,7 +337,7 @@
       text-align: center;
       position: relative;
     }
-    
+
     .chrome-promotion button {
       background: white;
       color: #4285F4;
@@ -232,11 +348,20 @@
       cursor: pointer;
       font-weight: bold;
     }
-    
+
     .chrome-promotion button:hover {
       background: #f0f0f0;
     }
-    
+
+    /* Page content */
+    .page-content {
+      display: none;
+    }
+
+    .page-content.active {
+      display: block;
+    }
+
     /* Responsive design */
     @media (max-width: 768px) {
       header {
@@ -244,33 +369,38 @@
         gap: 1rem;
         text-align: center;
       }
-      
+
       nav {
         flex-wrap: wrap;
         justify-content: center;
       }
-      
+
       .hero h2 {
         font-size: 2.2rem;
       }
-      
+
       .hero p {
         font-size: 1.1rem;
       }
-      
+
       .app-cards {
         flex-direction: column;
         align-items: center;
       }
-      
+
       .app-card {
         width: 100%;
         max-width: 350px;
       }
-      
+
       .chrome-promotion {
         font-size: 14px;
         padding: 8px;
+      }
+
+      .team-section, .ways-to-participate {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
@@ -289,40 +419,134 @@
       <h1>Lula Support</h1>
     </div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="participate.html">Participate</a>
+      <a href="#" class="nav-link active" data-page="home">Home</a>
+      <a href="#" class="nav-link" data-page="about">About</a>
+      <a href="#" class="nav-link" data-page="participate">Participate</a>
     </nav>
   </header>
 
   <main>
-    <section class="hero">
-      <h2>Empowering Communities</h2>
-      <p>Lula helps communities connect and thrive through open-source collaboration.</p>
-    </section>
+    <!-- Home Page Content -->
+    <div id="home" class="page-content active">
+      <section class="hero">
+        <h2>Empowering Communities</h2>
+        <p>Lula helps communities connect and thrive through open-source collaboration. We provide tools, resources, and support to foster growth and innovation.</p>
+      </section>
 
-    <section class="apps-section">
-      <h3>Explore Our Platforms</h3>
-      <div class="app-cards">
-        <div class="app-card">
-          <a href="http://localhost:3010" target="_blank">
-            <div class="app-icon">🌍</div>
-            <h4>Heart Hub</h4>
-            <p>Connect with community resources and support networks</p>
-            <span class="btn">Visit Heart Hub</span>
-          </a>
+      <section class="apps-section">
+        <h3>Explore Our Platforms</h3>
+        <div class="app-cards">
+          <div class="app-card">
+            <a href="http://localhost:3010" target="_blank">
+              <div class="app-icon">🌍</div>
+              <h4>Heart Hub</h4>
+              <p>Connect with community resources and support networks</p>
+              <span class="btn">Visit Heart Hub</span>
+            </a>
+          </div>
+
+          <div class="app-card">
+            <a href="http://localhost:3030" target="_blank">
+              <div class="app-icon">✨</div>
+              <h4>BabsApp</h4>
+              <p>Tools and applications for community engagement</p>
+              <span class="btn">Explore BabsApp</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- About Page Content -->
+    <div id="about" class="page-content">
+      <section class="hero">
+        <h2>About Lula Support</h2>
+        <p>Learn about our mission, vision, and the team behind Lula Support</p>
+      </section>
+
+      <section class="about-content">
+        <h2>Our Story</h2>
+        <p>Lula Support was founded in 2023 with a simple mission: to empower communities through technology and collaboration. We believe that when people come together and share resources, incredible things can happen.</p>
+        
+        <p>Our platform provides tools and resources that help communities organize, share knowledge, and support one another. From local neighborhood groups to global open-source projects, Lula Support is here to help you make a difference.</p>
+        
+        <h2>Our Team</h2>
+        <div class="team-section">
+          <div class="team-member">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80" alt="Team Member">
+            <h3>Sarah Johnson</h3>
+            <p>Founder & CEO</p>
+          </div>
+          
+          <div class="team-member">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80" alt="Team Member">
+            <h3>Michael Chen</h3>
+            <p>Technical Director</p>
+          </div>
+          
+          <div class="team-member">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80" alt="Team Member">
+            <h3>Emily Rodriguez</h3>
+            <p>Community Manager</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Participate Page Content -->
+    <div id="participate" class="page-content">
+      <section class="hero">
+        <h2>Participate with Lula</h2>
+        <p>Join our community and contribute to making a difference</p>
+      </section>
+
+      <section class="participate-content">
+        <h2>How You Can Get Involved</h2>
+        <p>There are many ways to participate in the Lula Support community. Whether you're a developer, designer, writer, or simply someone who wants to make a difference, we have opportunities for you.</p>
+        
+        <div class="ways-to-participate">
+          <div class="participation-option">
+            <i class="fas fa-code"></i>
+            <h3>Contribute Code</h3>
+            <p>Help us build and improve our open-source projects on GitHub.</p>
+          </div>
+          
+          <div class="participation-option">
+            <i class="fas fa-pencil-alt"></i>
+            <h3>Write Documentation</h3>
+            <p>Create tutorials, guides, and documentation to help others.</p>
+          </div>
+          
+          <div class="participation-option">
+            <i class="fas fa-comments"></i>
+            <h3>Community Support</h3>
+            <p>Help answer questions and provide support to other community members.</p>
+          </div>
+          
+          <div class="participation-option">
+            <i class="fas fa-hands-helping"></i>
+            <h3>Donate</h3>
+            <p>Support our mission financially to help us continue providing free resources.</p>
+          </div>
         </div>
         
-        <div class="app-card">
-          <a href="http://localhost:3030" target="_blank">
-            <div class="app-icon">✨</div>
-            <h4>BabsApp</h4>
-            <p>Tools and applications for community engagement</p>
-            <span class="btn">Explore BabsApp</span>
-          </a>
-        </div>
-      </div>
-    </section>
+        <h2>Join Our Community</h2>
+        <form id="participation-form">
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Your Email" required>
+          <select required>
+            <option value="" disabled selected>How would you like to participate?</option>
+            <option value="code">Contribute Code</option>
+            <option value="documentation">Write Documentation</option>
+            <option value="support">Community Support</option>
+            <option value="donate">Donate</option>
+            <option value="other">Other</option>
+          </select>
+          <textarea placeholder="Tell us about yourself and how you'd like to contribute" rows="4"></textarea>
+          <button type="submit">Get Involved</button>
+        </form>
+      </section>
+    </div>
   </main>
 
   <footer>
@@ -330,30 +554,53 @@
   </footer>
 
   <script>
-    // Check if browser is Chrome
-    function isChrome() {
-      return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-    }
-    
-    // Open in Chrome function
-    function openInChrome() {
-      const url = window.location.href;
-      window.location.href = 'googlechrome://' + url;
-      
-      // Fallback - if chrome isn't installed, redirect to chrome download
-      setTimeout(function() {
-        window.location.href = 'https://www.google.com/chrome/';
-      }, 500);
-    }
-    
-    // Dismiss banner
-    function dismissBanner() {
-      document.getElementById('chromeBanner').style.display = 'none';
-      localStorage.setItem('chromeBannerDismissed', 'true');
-    }
-    
-    // On page load
+    // Single Page Application functionality
     document.addEventListener('DOMContentLoaded', function() {
+      const navLinks = document.querySelectorAll('.nav-link');
+      const pageContents = document.querySelectorAll('.page-content');
+      
+      // Handle navigation clicks
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetPage = this.getAttribute('data-page');
+          
+          // Update active navigation link
+          navLinks.forEach(navLink => navLink.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Show target page content
+          pageContents.forEach(content => {
+            content.classList.remove('active');
+            if (content.id === targetPage) {
+              content.classList.add('active');
+            }
+          });
+        });
+      });
+      
+      // Check if browser is Chrome
+      function isChrome() {
+        return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+      }
+      
+      // Open in Chrome function
+      window.openInChrome = function() {
+        const url = window.location.href;
+        window.location.href = 'googlechrome://' + url;
+        
+        // Fallback - if chrome isn't installed, redirect to chrome download
+        setTimeout(function() {
+          window.location.href = 'https://www.google.com/chrome/';
+        }, 500);
+      }
+      
+      // Dismiss banner
+      window.dismissBanner = function() {
+        document.getElementById('chromeBanner').style.display = 'none';
+        localStorage.setItem('chromeBannerDismissed', 'true');
+      }
+      
       // Show Chrome promotion if not dismissed and not already in Chrome
       const isDismissed = localStorage.getItem('chromeBannerDismissed');
       if (!isChrome() && !isDismissed) {
@@ -362,9 +609,14 @@
         document.getElementById('chromeBanner').style.display = 'none';
       }
       
-      // Force reload without cache when page is loaded
-      if (performance.navigation.type === 1) {
-        window.location.replace(window.location.href + '?v=' + new Date().getTime());
+      // Handle form submission
+      const participationForm = document.getElementById('participation-form');
+      if (participationForm) {
+        participationForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          alert('Thank you for your interest in participating! We will contact you soon.');
+          this.reset();
+        });
       }
       
       // Add version parameter to prevent caching
