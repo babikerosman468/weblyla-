@@ -1,18 +1,25 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Simple deployment script
+# Simple deployment script using SSH authentication
 
 echo "🚀 Starting deployment..."
 
-# Check if PAT is set
-if [ -z "$GITHUB_PAT" ]; then
-    echo "❌ ERROR: GITHUB_PAT not set!"
-    echo "Run: export GITHUB_PAT='your_pat_here'"
+# Check if SSH key is set up
+if [ ! -f ~/.ssh/id_rsa ] && [ ! -f ~/.ssh/id_ed25519 ]; then
+    echo "❌ ERROR: No SSH key found!"
+    echo "Run: ssh-keygen -t ed25519 -C \"your_email@example.com\""
+    echo "Then add the public key to your GitHub account:"
+    echo "cat ~/.ssh/id_ed25519.pub"
     exit 1
 fi
 
-# Check PAT length
-if [ ${#GITHUB_PAT} -ne 40 ]; then
-    echo "❌ ERROR: PAT should be 40 characters, got ${#GITHUB_PAT}"
+# Test SSH connection to GitHub
+echo "🔑 Testing SSH connection to GitHub..."
+ssh -T git@github.com > /dev/null 2>&1
+if [ $? -ne 1 ]; then
+    echo "❌ ERROR: SSH connection to GitHub failed!"
+    echo "Make sure:"
+    echo "1. Your SSH key is added to GitHub"
+    echo "2. SSH agent is running: eval \$(ssh-agent) && ssh-add ~/.ssh/id_ed25519"
     exit 1
 fi
 
@@ -24,8 +31,8 @@ git add .
 echo "💾 Committing changes..."
 git commit -m "Update: $(date '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
 
-echo "📡 Pushing to GitHub..."
-git push https://babikerosman468:$GITHUB_PAT@github.com/babikerosman468/weblyla-.git main
+echo "📡 Pushing to GitHub using SSH..."
+git push git@github.com:babikerosman468/weblyla-.git main
 
 echo "🌐 Deploying to Vercel..."
 vercel --prod --yes
