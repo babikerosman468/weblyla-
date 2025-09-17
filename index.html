@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Lula Support - Empowering Communities</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -210,6 +213,30 @@
       font-size: 1.1rem;
     }
     
+    /* Chrome promotion banner */
+    .chrome-promotion {
+      background: linear-gradient(90deg, #4285F4, #34A853, #FBBC05, #EA4335);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .chrome-promotion button {
+      background: white;
+      color: #4285F4;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      margin-left: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .chrome-promotion button:hover {
+      background: #f0f0f0;
+    }
+    
     /* Responsive design */
     @media (max-width: 768px) {
       header {
@@ -240,10 +267,22 @@
         width: 100%;
         max-width: 350px;
       }
+      
+      .chrome-promotion {
+        font-size: 14px;
+        padding: 8px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Chrome promotion banner -->
+  <div class="chrome-promotion" id="chromeBanner">
+    <span>✨ For the best experience, we recommend using Google Chrome</span>
+    <button onclick="openInChrome()">Open in Chrome</button>
+    <button onclick="dismissBanner()" style="background: transparent; color: white; margin-left: 5px;">×</button>
+  </div>
+
   <header>
     <div class="logo">
       <div class="logo-icon">💫</div>
@@ -289,5 +328,54 @@
   <footer>
     <p>&copy; 2025 Lula Support. All rights reserved.</p>
   </footer>
+
+  <script>
+    // Check if browser is Chrome
+    function isChrome() {
+      return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    }
+    
+    // Open in Chrome function
+    function openInChrome() {
+      const url = window.location.href;
+      window.location.href = 'googlechrome://' + url;
+      
+      // Fallback - if chrome isn't installed, redirect to chrome download
+      setTimeout(function() {
+        window.location.href = 'https://www.google.com/chrome/';
+      }, 500);
+    }
+    
+    // Dismiss banner
+    function dismissBanner() {
+      document.getElementById('chromeBanner').style.display = 'none';
+      localStorage.setItem('chromeBannerDismissed', 'true');
+    }
+    
+    // On page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Show Chrome promotion if not dismissed and not already in Chrome
+      const isDismissed = localStorage.getItem('chromeBannerDismissed');
+      if (!isChrome() && !isDismissed) {
+        document.getElementById('chromeBanner').style.display = 'block';
+      } else {
+        document.getElementById('chromeBanner').style.display = 'none';
+      }
+      
+      // Force reload without cache when page is loaded
+      if (performance.navigation.type === 1) {
+        window.location.replace(window.location.href + '?v=' + new Date().getTime());
+      }
+      
+      // Add version parameter to prevent caching
+      const links = document.querySelectorAll('a');
+      links.forEach(link => {
+        if (link.href.indexOf(window.location.hostname) !== -1) {
+          link.href = link.href + '?v=' + new Date().getTime();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
+

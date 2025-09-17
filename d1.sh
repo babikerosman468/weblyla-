@@ -88,3 +88,4 @@ for pattern in "${SECRET_FILES[@]}"; do
 done
 
 echo "🎉 All done! Your Lula Support website should now be open in Chrome."
+
