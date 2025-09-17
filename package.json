@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "npm-audit-resolver": "^3.0.0-RC.0"
+  }
+}
