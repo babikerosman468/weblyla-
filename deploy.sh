@@ -37,8 +37,29 @@ git push git@github.com:babikerosman468/weblyla-.git main
 echo "🌐 Deploying to Vercel..."
 vercel --prod --yes
 
+# Get the deployment URL (you might need to adjust this based on vercel output)
+DEPLOY_URL="https://weblyla-nngy4tr7n-babikerosmans-projects.vercel.app"
+
 echo "✅ Deployment complete!"
-echo "🌍 Your site is live at: https://weblyla-nngy4tr7n-babikerosmans-projects.vercel.app"
+echo "🌍 Your site is live at: $DEPLOY_URL"
+
+# Open the website in default browser
+echo "🌐 Opening website..."
+if command -v termux-open-url > /dev/null 2>&1; then
+    # Termux environment
+    termux-open-url "$DEPLOY_URL"
+elif command -v xdg-open > /dev/null 2>&1; then
+    # Linux environments
+    xdg-open "$DEPLOY_URL"
+elif command -v open > /dev/null 2>&1; then
+    # macOS
+    open "$DEPLOY_URL"
+elif command -v start > /dev/null 2>&1; then
+    # Windows (if running in Windows subsystem)
+    start "$DEPLOY_URL"
+else
+    echo "⚠️  Could not automatically open browser. Please visit: $DEPLOY_URL"
+fi
 
 # Security check - prevent committing secrets
 if [ -f ".env" ]; then
