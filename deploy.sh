@@ -37,28 +37,36 @@ git push git@github.com:babikerosman468/weblyla-.git main
 echo "🌐 Deploying to Vercel..."
 vercel --prod --yes
 
-# Get the deployment URL (you might need to adjust this based on vercel output)
+# Get the deployment URL
 DEPLOY_URL="https://weblyla-nngy4tr7n-babikerosmans-projects.vercel.app"
 
 echo "✅ Deployment complete!"
 echo "🌍 Your site is live at: $DEPLOY_URL"
 
-# Open the website in default browser
-echo "🌐 Opening website..."
-if command -v termux-open-url > /dev/null 2>&1; then
-    # Termux environment
-    termux-open-url "$DEPLOY_URL"
-elif command -v xdg-open > /dev/null 2>&1; then
-    # Linux environments
-    xdg-open "$DEPLOY_URL"
+# Open the website in Chrome specifically
+echo "🌐 Opening website in Chrome..."
+if command -v termux-open > /dev/null 2>&1; then
+    # Termux environment - try to open in Chrome if available
+    termux-open --view --app "com.android.chrome" "$DEPLOY_URL" 2>/dev/null || termux-open "$DEPLOY_URL"
+elif command -v google-chrome > /dev/null 2>&1; then
+    # Linux with Google Chrome installed
+    google-chrome "$DEPLOY_URL" >/dev/null 2>&1 &
+elif command -v chromium-browser > /dev/null 2>&1; then
+    # Linux with Chromium
+    chromium-browser "$DEPLOY_URL" >/dev/null 2>&1 &
 elif command -v open > /dev/null 2>&1; then
-    # macOS
-    open "$DEPLOY_URL"
+    # macOS - open with Chrome if available, else default browser
+    if open -a "Google Chrome" "$DEPLOY_URL" >/dev/null 2>&1; then
+        echo "Opened in Google Chrome"
+    else
+        open "$DEPLOY_URL"
+    fi
 elif command -v start > /dev/null 2>&1; then
-    # Windows (if running in Windows subsystem)
-    start "$DEPLOY_URL"
+    # Windows
+    start chrome "$DEPLOY_URL" 2>/dev/null || start "$DEPLOY_URL"
 else
-    echo "⚠️  Could not automatically open browser. Please visit: $DEPLOY_URL"
+    echo "⚠️  Could not automatically open Chrome. Please visit: $DEPLOY_URL"
+    echo "📱 Or open Chrome manually and go to: $DEPLOY_URL"
 fi
 
 # Security check - prevent committing secrets
@@ -78,3 +86,6 @@ for pattern in "${SECRET_FILES[@]}"; do
         exit 1
     fi
 done
+
+echo "🎉 All done! Your Lula Support website should now be open in Chrome."
+
