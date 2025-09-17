@@ -32,3 +32,21 @@ vercel --prod --yes
 
 echo "✅ Deployment complete!"
 echo "🌍 Your site is live at: https://weblyla-nngy4tr7n-babikerosmans-projects.vercel.app"
+
+# Security check - prevent committing secrets
+if [ -f ".env" ]; then
+    echo "Checking for potential secrets in .env file..."
+    if grep -q -E "(token|key|secret|password)" .env; then
+        echo "ERROR: Potential secrets found in .env file. Aborting commit."
+        exit 1
+    fi
+fi
+
+# Check for other secret files
+SECRET_FILES=( "pat*" "*.secret" "credentials*" )
+for pattern in "${SECRET_FILES[@]}"; do
+    if ls $pattern > /dev/null 2>&1; then
+        echo "ERROR: Secret files found matching pattern: $pattern"
+        exit 1
+    fi
+done
